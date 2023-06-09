@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Password Strength Checker</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      max-width: 400px;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #FF6B6B;
+      font-size: 28px;
+      margin-top: 0;
+      letter-spacing: 1px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: #777;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      background-color: #FF6B6B;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #E65252;
+    }
+
+    p {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #555;
+    }
+
+    .graphic {
+      position: relative;
+      height: 100px;
+      margin-top: 30px;
+    }
+
+    .strength-meter {
+      position: absolute;
+      width: 100%;
+      height: 10px;
+      background-color: #eee;
+      border-radius: 5px;
+    }
+
+    .strength-meter-bar {
+      position: absolute;
+      height: 100%;
+      border-radius: 5px;
+      animation: fillMeter 1s ease;
+    }
+
+    .strength-meter-bar-1 {
+      background-color: #FF6B6B;
+    }
+
+    .strength-meter-bar-2 {
+      background-color: #FFC154;
+    }
+
+    .strength-meter-bar-3 {
+      background-color: #FFF075;
+    }
+
+    .strength-meter-bar-4 {
+      background-color: #A9FF94;
+    }
+
+    .strength-meter-bar-5 {
+      background-color: #64FFDA;
+    }
+
+    @keyframes fillMeter {
+      0% { width: 0; }
+    }
+
+    .gif {
+      margin-top: 30px;
+      display: none;
+    }
+  </style>
+  <script src="script.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Password Strength Checker</h1>
+    <label for="password">Enter your password:</label>
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="checkPassword()">Check Strength</button>
+    <div class="graphic">
+      <div class="strength-meter">
+        <div class="strength-meter-bar strength-meter-bar-1"></div>
+      </div>
+    </div>
+    <p id="strength"></p>
+    <img class="gif" src="/Users/niralirathod/Documents/GitHub/MLH/Resources/clapping-applaud.gif" alt="Success GIF">
+  </div>
+
+  <script>
+    function checkPassword() {
+      const passwordInput = document.getElementById("password");
+      const password = passwordInput.value;
+      const strength = checkPasswordStrength(password);
+      const strengthMeterBar = document.querySelector(".strength-meter-bar");
+      const strengthText = document.getElementById("strength");
+      const successGif = document.querySelector(".gif");
+
+      if (password === "") {
+        strengthText.textContent = "Please enter a password";
+        strengthMeterBar.style.width = "0";
+        successGif.style.display = "none";
+      } else {
+        strengthText.textContent = `Password strength: ${strength}/5`;
+
+        // Update the width of the strength meter bar based on password strength
+        const maxStrength = 5;
+        const barWidth = (strength / maxStrength) * 100;
+        strengthMeterBar.style.width = `${barWidth}%`;
+
+        if (strength === maxStrength) {
+          successGif.style.display = "block";
+        } else {
+          successGif.style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
